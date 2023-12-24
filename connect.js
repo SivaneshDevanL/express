@@ -14,5 +14,7 @@ mongoose.connection
 .on('connectionError', (err) => {
     console.log(err);
 })
-
+// process.on('warning', (warning) => {
+//     console.log(warning.stack);
+// });
 app.listen(port);
