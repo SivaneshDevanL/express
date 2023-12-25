@@ -54,6 +54,7 @@ function get(name,pass) {
 }
 app.post('/login', (req, res) => {
     const { userName, password } = req.body
+    get(userName,password)
     let v;
     notes.find({})
         .then(y =>
@@ -75,7 +76,6 @@ app.post('/login', (req, res) => {
             })
         }
     }, 500)
-    get(userName,password)
 })
 app.post('/signup', (req, res) => {
     const { userName, password } = req.body
