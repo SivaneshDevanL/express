@@ -4,7 +4,7 @@ const app = require('./app');
 mongoose.connect('mongodb+srv://sivanesh_DB1:dbsivapass@cluster0.n4x33mn.mongodb.net/notesapp', { 
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
-    // useFindAndModify: false 
+    useFindAndModify: false 
 });
 
 mongoose.connection

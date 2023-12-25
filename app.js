@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false })) //try true also 
-var name, pass;
+var name, pass;  //need to change
 app.get('/data', (req, res) => {
     let n = []
     notes.find({})
@@ -39,7 +39,7 @@ app.delete('/deleteAdmin', (req, res) => {
     notes.findByIdAndRemove(_id)
         .then(y => y && res.status(200).json({ message: "success" }))
 })
-function get() {
+function get(name,pass) {
     app.get('/', (req, res) => {
         // notes.find({userName:name,password:pass})
         notes.find({})
@@ -60,8 +60,6 @@ app.post('/login', (req, res) => {
         .then(y =>
             v = y.filter((i) => {
                 if (i._doc.userName === userName && i._doc.password === password) {
-                    name = userName;
-                    pass = password;
                     return i;
                 }
             }
@@ -77,7 +75,7 @@ app.post('/login', (req, res) => {
                 message: "failed"
             })
         }
-        get()
+        get(userName,password)
     }, 500)
 
 })
@@ -106,10 +104,9 @@ app.post('/signup', (req, res) => {
 
 
 app.post('/add', (req, res) => {
-    const { title, description, id } = req.body;
+    const {userName,password, title, description, id } = req.body;
     if (id && (title || description)) {
-        console.log(id);
-        notes.find({ userName: name, password: pass })
+        notes.find({ userName, password})
             .then(x => {
                 const t = `title${id}`;
                 const d = `description${id}`;
@@ -118,12 +115,12 @@ app.post('/add', (req, res) => {
                 //   });
 
                 // const product = await Product.findByIdAndRemove(req.params.id);
-                notes.findOneAndUpdate({ userName: name, password: pass }, { $set: { [t]: title, [d]: description } },
+                notes.findOneAndUpdate({ userName, password }, { $set: { [t]: title, [d]: description } },
                     { upsert: true }
                     , function (err, doc) {
                         if (err) { throw err; }
                         else {
-                            get();
+                            get(userName,password);
                             res.status(200).json({
                                 message: 'success'
                             })
@@ -133,15 +130,15 @@ app.post('/add', (req, res) => {
             })
     }
     else if (id) {
-        notes.find({ userName: name, password: pass })
+        notes.find({ userName, password })
             .then(x => {
                 const t = `title${id}`;
                 const d = `description${id}`;
-                notes.findOneAndUpdate({ userName: name, password: pass }, { $set: { [t]: '', [d]: '' } },
+                notes.findOneAndUpdate({ userName, password }, { $set: { [t]: '', [d]: '' } },
                     { upsert: true }, function (err, doc) {
                         if (err) { throw err; }
                         else {
-                            get();
+                            get(userName,password);
                             console.log("Updated");
                             res.status(200).json({
                                 message: 'success'
@@ -152,16 +149,16 @@ app.post('/add', (req, res) => {
             })
     }
     else {
-        notes.find({ userName: name, password: pass })
+        notes.find({ userName, password })
             .then(x => {
                 const i = (Object.keys(x[0]._doc).length / 2) - 1;
                 const t = `title${i}`;
                 const d = `description${i}`;
-                notes.findOneAndUpdate({ userName: name, password: pass }, { $set: { [t]: title, [d]: description } },
+                notes.findOneAndUpdate({ userName, password }, { $set: { [t]: title, [d]: description } },
                     { upsert: true }, function (err, doc) {
                         if (err) { throw err; }
                         else {
-                            get();
+                            get(userName,password);
                             res.status(200).json({
                                 message: 'success'
                             })
