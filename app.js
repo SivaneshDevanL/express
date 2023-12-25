@@ -108,18 +108,24 @@ app.post('/add', (req, res) => {
             .then(x => {
                 const t = `title${id}`;
                 const d = `description${id}`;
-                notes.findOneAndUpdate({ userName, password }, { $set: { [t]: title, [d]: description } },
-                    { upsert: true }
-                    , function (err, doc) {
-                        if (err) { throw err; }
-                        else {
-                            get();
-                            res.status(200).json({
-                                message: 'success'
-                            })
-                        }
-                    }
-                )
+                notes.findOneAndUpdate({ userName, password }, { $set: { [t]: title, [d]: description } })
+                .then(z=>{       console.log(z);
+                                   get();
+                    res.status(200).json({
+                        message: 'success'
+                    })})
+                //    , { upsert: true }
+                //     , function (err, doc) {
+                //         if (err) { throw err; }
+                //         else {
+                //             get();
+                //             res.status(200).json({
+                //                 message: 'success'
+                //             })
+                //         }
+                //     }
+                // )
+                      
             })
     }
     else if (id) {
@@ -127,17 +133,22 @@ app.post('/add', (req, res) => {
             .then(x => {
                 const t = `title${id}`;
                 const d = `description${id}`;
-                notes.findOneAndUpdate({ userName, password }, { $set: { [t]: '', [d]: '' } },
-                    { upsert: true }, function (err, doc) {
-                        if (err) { throw err; }
-                        else {
-                            get();
-                            res.status(200).json({
-                                message: 'success'
-                            })
-                        }
-                    }
-                )
+                notes.findOneAndUpdate({ userName, password }, { $set: { [t]: '', [d]: '' } })
+                .then(z=>{       console.log(z);
+                    get();
+     res.status(200).json({
+         message: 'success'
+     })})
+                //     ,{ upsert: true }, function (err, doc) {
+                //         if (err) { throw err; }
+                //         else {
+                //             get();
+                //             res.status(200).json({
+                //                 message: 'success'
+                //             })
+                //         }
+                //     }
+                // )
             })
     }
     else {
@@ -146,17 +157,22 @@ app.post('/add', (req, res) => {
                 const i = (Object.keys(x[0]._doc).length / 2) - 1;
                 const t = `title${i}`;
                 const d = `description${i}`;
-                notes.findOneAndUpdate({ userName, password }, { $set: { [t]: title, [d]: description } },
-                    { upsert: true }, function (err, doc) {
-                        if (err) { throw err; }
-                        else {
-                            get();
-                            res.status(200).json({
-                                message: 'success'
-                            })
-                        }
-                    }
-                )
+                notes.findOneAndUpdate({ userName, password }, { $set: { [t]: title, [d]: description } })
+                .then(z=>{       console.log(z);
+                    get();
+     res.status(200).json({
+         message: 'success'
+     })})
+                //    , { upsert: true }, function (err, doc) {
+                //         if (err) { throw err; }
+                //         else {
+                //             get();
+                //             res.status(200).json({
+                //                 message: 'success'
+                //             })
+                //         }
+                //     }
+                // )
             })
     }
 })
