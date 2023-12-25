@@ -74,9 +74,8 @@ app.post('/login', (req, res) => {
                 message: "failed"
             })
         }
-        get(userName,password)
     }, 500)
-
+    get(userName,password)
 })
 app.post('/signup', (req, res) => {
     const { userName, password } = req.body
