@@ -9,7 +9,6 @@ app.use(express.json())
 app.use(express.urlencoded())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false })) //try true also 
-var name, pass;  //need to change
 app.get('/data', (req, res) => {
     let n = []
     notes.find({})
